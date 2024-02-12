@@ -10,7 +10,7 @@ class ArreraVideoDownload :
     def __init__(self,color,colorbutton,textcolorbutton,textcolorlabel):
         #Var 
         self.__nameApp = "Arrera Video Download"
-        self.__versionApp = ""
+        self.__versionApp = "I2024-3.00"
         self.__imagePath = "image/ArreraVideoDownload.png" 
         self.__copyrightApp = "Copyright Arrera Software by Baptiste P 2023-2024"
         #fenetre
