@@ -5,6 +5,7 @@ from tkinter.messagebox import*
 from librairy.travailJSON import*
 import threading as th
 import webbrowser
+from demonTiger.CTigerDemon import *
 
 class CArreraDGUI :
     def __init__(self) :
@@ -14,6 +15,9 @@ class CArreraDGUI :
         dectOs = OS()
         # Initilisation du theard
         self.__tDownload = th.Thread()
+        # Initilisation du demon tiger
+        self.__tigerDemon = CTigerDemon("arrera-video-download",
+                                        "https://arrera-software.fr/depots.json")
         # Mise en place de l'icon
         if (dectOs.osWindows() == True):
             icon = "image/ArreraVideoDownload.ico"
@@ -35,6 +39,8 @@ class CArreraDGUI :
         self.__fPara = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
         # Download
         self.__fDownload = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
+        # Maj
+        self.__fMaj = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
         # Widget
         # fmain
         labelTitle = self.__arreraTk.createLabel(self.__fMain,text="Arrera Download",
@@ -67,17 +73,30 @@ class CArreraDGUI :
 
         btnApropos = self.__arreraTk.createButton(self.__fPara,text="A propos d'Arrera Download"
                                                   ,command= lambda : self.__arreraTk.aproposWindows(
-                nameSoft="Arrera Download",version="",
+                nameSoft="Arrera Download",version=self.__tigerDemon.getVersionSoft(),
                 iconFile="image/ArreraVideoDownload.png",
                 copyright="",linkSource="",linkWeb=""),
                                                   ppolice="Arial",ptaille=20)
 
         btnExitPara = self.__arreraTk.createButton(self.__fPara,text="Retour a l'acceuil",ppolice="Arial",
                                                    ptaille=20,command=self.__backMain)
+
+        # fMaj
+        labelTitleMaj = self.__arreraTk.createLabel(self.__fMaj,text="Arrera Download",
+                                                 ppolice="Arial",ptaille=30,
+                                                 pstyle="bold")
+        labelTextMaj = self.__arreraTk.createLabel(self.__fMaj,text="Une nouvelle version d'Arrera Video Download est sortie. Allez sur l'Arrera Store pour la mettre à jour ou télécharger la nouvelle version.",
+                                                    ppolice="Arial",ptaille=20,pwraplength=450)
+
+        btnContinueApp = self.__arreraTk.createButton(self.__fMaj,text="Continuer\nsans mettre a jour",
+                                                      ppolice="Arial",ptaille=20,
+                                                      command=self.__continueApp)
+
+        btnDownloadNewVersion = self.__arreraTk.createButton(self.__fMaj,text="Telecharger\nla nouvelle version",
+                                                             ppolice="Arial",ptaille=20,
+                                                             command=self.__downloadNewVersion)
         # fDownload
         self.__labelDownload = self.__arreraTk.createLabel(self.__fDownload,text="",ppolice="Arial",ptaille=20)
-        # Affichage
-        self.__arreraTk.placeCenter(self.__fMain)
         # fmain
         self.__arreraTk.placeTopCenter(labelTitle)
         modeSelection.place(x=10,y=60)
@@ -89,7 +108,11 @@ class CArreraDGUI :
         self.__arreraTk.placeCenter(btnDoc)
         self.__arreraTk.placeCenterOnWidth(btnChooseFile,120)
         self.__arreraTk.placeCenterOnWidth(btnApropos,300)
-
+        # fMaj
+        self.__arreraTk.placeTopCenter(labelTitleMaj)
+        self.__arreraTk.placeCenter(labelTextMaj)
+        self.__arreraTk.placeRightBottom(btnContinueApp)
+        self.__arreraTk.placeLeftBottom(btnDownloadNewVersion)
         #fDonwload
         self.__arreraTk.placeCenter(self.__labelDownload)
 
@@ -102,8 +125,12 @@ class CArreraDGUI :
         self.__jsonSetting = jsonWork("download.json")
     
     def active(self):
-        self.__windows.mainloop()
-    
+        if (self.__tigerDemon.checkUpdate()):
+            self.__arreraTk.placeCenter(self.__fMaj)
+        else :
+            self.__arreraTk.placeCenter(self.__fMain)
+        self.__arreraTk.view()
+
     def __setFolder(self):
         folder = filedialog.askdirectory(title="Dossier de telechargement")
         if (folder != "") :
@@ -176,3 +203,13 @@ class CArreraDGUI :
             self.__tDownload = th.Thread()
             self.__arreraTk.placeCenter(self.__fMain)
             self.__windows.update()
+
+
+    def __continueApp(self):
+        self.__fMaj.place_forget()
+        self.__arreraTk.placeCenter(self.__fMain)
+
+
+    def __downloadNewVersion(self):
+        wb.open("https://github.com/Arrera-Software/Arrera-VideoDownload/releases")
+        self.__windows.quit()
