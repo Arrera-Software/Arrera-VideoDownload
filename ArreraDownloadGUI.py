@@ -36,27 +36,35 @@ class CArreraDGUI :
                                        linkSource="",
                                        linkWeb=""))
         menu.add_command(label="Documentation",command= lambda : webbrowser.open("https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/README.md"))
-        self.__windows.configure(menu=menu)
-        
+        #self.__windows.configure(menu=menu)
+
+        # Frame
+        #main
+        self.__fMain = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
+        # Para
+
+        # Download
+
         # Widget
-        labelTitle = self.__arreraTk.createLabel(self.__windows,text="Arrera Download",
+        labelTitle = self.__arreraTk.createLabel(self.__fMain,text="Arrera Download",
                                                  ppolice="Arial",ptaille=30,
                                                  pstyle="bold")
 
-        self.__entryURL = self.__arreraTk.createEntry(self.__windows,ppolice="Arial",ptaille=30,width=400)
-        btnDownload = self.__arreraTk.createButton(self.__windows,text="Telecharger",command=self.__download,
-                                                   ppolice="Arial",ptaille=25)
-        btnChooseFile = self.__arreraTk.createButton(self.__windows,text ="Dossier Sortie",command=self.__setFolder,
-                                                     ppolice="Arial",ptaille=25)
-        modeSelection = self.__arreraTk.createOptionMenu(self.__windows,
+        self.__entryURL = self.__arreraTk.createEntry(self.__fMain,ppolice="Arial",ptaille=20,width=400)
+        btnDownload = self.__arreraTk.createButton(self.__fMain,text="Telecharger",command=self.__download,
+                                                   ppolice="Arial",ptaille=20)
+        btnChooseFile = self.__arreraTk.createButton(self.__fMain,text ="Dossier Sortie",command=self.__setFolder,
+                                                     ppolice="Arial",ptaille=20)
+        modeSelection = self.__arreraTk.createOptionMenu(self.__fMain,
                                                          var = self.__varGetMode,
                                                          value=self.__listMode,
                                                          police="Arial",taille=20)
         # Affichage
-        labelTitle.pack()
+        self.__arreraTk.placeCenter(self.__fMain)
+        self.__arreraTk.placeTopCenter(labelTitle)
         modeSelection.place(x=10,y=60)
-        btnDownload.place(relx=1, rely=1, anchor='se')
-        btnChooseFile.place(relx=0, rely=1, anchor='sw')
+        self.__arreraTk.placeBottomCenter(btnDownload)
+
         self.__arreraTk.placeCenter(self.__entryURL)
         
         # Mise d'une valeur sur l'option menu 
