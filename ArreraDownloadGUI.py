@@ -25,7 +25,7 @@ class CArreraDGUI :
                                              resizable=False,icon=icon)
 
         # Var
-        self.__listMode = ["Video Simple","Juste sons","Juste Video"]
+        self.__listMode = ["Vidéo simple","Juste son","Juste vidéo"]
         self.__varGetMode = StringVar(self.__windows)
 
         # Frame
@@ -133,13 +133,13 @@ class CArreraDGUI :
         # Recuperation du mode
         mode = self.__varGetMode.get()
 
-        if (mode == "Video Simple"):
+        if (mode == self.__listMode[0]):
             self.__objetArrera.setMode(1)
         else :
-            if (mode == "Juste sons") :
+            if (mode == self.__listMode[1]) :
                 self.__objetArrera.setMode(2)
             else :
-                if (mode == "Juste Video") :
+                if (mode == self.__listMode[2]) :
                     self.__objetArrera.setMode(3)
         if (url == ""):
             showerror("Download","Aucun URL")
