@@ -75,7 +75,9 @@ class CArreraDGUI :
                                                   ,command= lambda : self.__arreraTk.aproposWindows(
                 nameSoft="Arrera Download",version=self.__tigerDemon.getVersionSoft(),
                 iconFile="image/ArreraVideoDownload.png",
-                copyright="",linkSource="",linkWeb=""),
+                copyright="Copyright Arrera Software by Baptiste P 2023-2025",
+                linkSource="https://github.com/Arrera-Software/Arrera-VideoDownload",
+                linkWeb="https://arrera-software.fr/"),
                                                   ppolice="Arial",ptaille=20)
 
         btnExitPara = self.__arreraTk.createButton(self.__fPara,text="Retour a l'acceuil",ppolice="Arial",
