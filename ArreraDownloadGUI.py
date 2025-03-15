@@ -43,17 +43,21 @@ class CArreraDGUI :
                                                  ppolice="Arial",ptaille=30,
                                                  pstyle="bold")
 
-        self.__entryURL = ctk.CTkEntry(self.__windows, placeholder_text="Entrez URL",font=("Arial",15),width=300)
-        btnDownload = ctk.CTkButton(self.__windows,text ="Telecharger",font=("Arial",25),command=self.__download)
-        btnChooseFile = ctk.CTkButton(self.__windows,text ="Dossier Sortie",font=("Arial",25),command=self.__setFolder)
-        modeSelection = ctk.CTkOptionMenu(self.__windows,variable=self.__varGetMode,values=self.__listMode)
-                
+        self.__entryURL = self.__arreraTk.createEntry(self.__windows,ppolice="Arial",ptaille=30,width=400)
+        btnDownload = self.__arreraTk.createButton(self.__windows,text="Telecharger",command=self.__download,
+                                                   ppolice="Arial",ptaille=25)
+        btnChooseFile = self.__arreraTk.createButton(self.__windows,text ="Dossier Sortie",command=self.__setFolder,
+                                                     ppolice="Arial",ptaille=25)
+        modeSelection = self.__arreraTk.createOptionMenu(self.__windows,
+                                                         var = self.__varGetMode,
+                                                         value=self.__listMode,
+                                                         police="Arial",taille=20)
         # Affichage
         labelTitle.pack()
         modeSelection.place(x=10,y=60)
         btnDownload.place(relx=1, rely=1, anchor='se')
         btnChooseFile.place(relx=0, rely=1, anchor='sw')
-        self.__entryURL.place(relx=0.5, rely=0.3, anchor="center")
+        self.__arreraTk.placeCenter(self.__entryURL)
         
         # Mise d'une valeur sur l'option menu 
         self.__varGetMode.set(self.__listMode[0])
