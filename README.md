@@ -19,7 +19,7 @@ Arrera Download est une application qui permet de télécharger des vidéos prov
 
 **Entourer en rose** : Bouton permettant de lancer le téléchargement de la vidéo.
 
-![Image Interface](https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/image/docs/img-gui.png)
+![Image Interface](https://github.com/Arrera-Software/Arrera-VideoDownload/blob/I2025-1.00/image/docs/img-gui.png)
 
 ### Parametre 
 
@@ -31,4 +31,4 @@ Arrera Download est une application qui permet de télécharger des vidéos prov
 
 **Entourer en rose** : Bouton permettant d'ouvrir la fenêtre À propos.
 
-![Image Parametre](https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/image/docs/paragui.png?raw=true)
+![Image Parametre](https://github.com/Arrera-Software/Arrera-VideoDownload/blob/I2025-1.00/image/docs/paragui.png)

@@ -68,7 +68,7 @@ class CArreraDGUI :
 
         btnDoc = self.__arreraTk.createButton(self.__fPara,text="Documentation d'Arrera Download",
                                               command= lambda : webbrowser.open(
-                                                  "https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/README.md")
+                                                  "https://github.com/Arrera-Software/Arrera-VideoDownload/blob/I2025-1.00/README.md")
                                               ,ppolice="Arial",ptaille=20)
 
         btnApropos = self.__arreraTk.createButton(self.__fPara,text="A propos d'Arrera Download"
