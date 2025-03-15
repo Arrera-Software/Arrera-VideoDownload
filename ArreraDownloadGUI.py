@@ -26,26 +26,15 @@ class CArreraDGUI :
         self.__listMode = ["Video Simple","Juste sons","Juste Video"]
         self.__varGetMode = StringVar(self.__windows)
 
-        # Menu
-        menu = Menu(self.__windows)
-        menu.add_command(label = "A Propos",command=lambda :
-        self.__arreraTk.aproposWindows(nameSoft="Arrera Download",
-                                       version="",
-                                       iconFile="image/ArreraVideoDownload.png",
-                                       copyright="",
-                                       linkSource="",
-                                       linkWeb=""))
-        menu.add_command(label="Documentation",command= lambda : webbrowser.open("https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/README.md"))
-        #self.__windows.configure(menu=menu)
-
         # Frame
         #main
         self.__fMain = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
         # Para
-
+        self.__fPara = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
         # Download
 
         # Widget
+        # fmain
         labelTitle = self.__arreraTk.createLabel(self.__fMain,text="Arrera Download",
                                                  ppolice="Arial",ptaille=30,
                                                  pstyle="bold")
@@ -53,22 +42,51 @@ class CArreraDGUI :
         self.__entryURL = self.__arreraTk.createEntry(self.__fMain,ppolice="Arial",ptaille=20,width=400)
         btnDownload = self.__arreraTk.createButton(self.__fMain,text="Telecharger",command=self.__download,
                                                    ppolice="Arial",ptaille=20)
-        btnChooseFile = self.__arreraTk.createButton(self.__fMain,text ="Dossier Sortie",command=self.__setFolder,
-                                                     ppolice="Arial",ptaille=20)
-        btnPara = self.__arreraTk.createButton(self.__fMain,text="Parametre",ppolice="Arial",ptaille=20)
+        btnPara = self.__arreraTk.createButton(self.__fMain,text="Parametre",ppolice="Arial",
+                                               ptaille=20,command=self.__viewPara)
         modeSelection = self.__arreraTk.createOptionMenu(self.__fMain,
                                                          var = self.__varGetMode,
                                                          value=self.__listMode,
                                                          police="Arial",taille=20)
+        # fpara
+        labelTitlePara = self.__arreraTk.createLabel(self.__fPara,
+                                                     text="Parametre Arrera Download",
+                                                     ppolice="Arial",
+                                                     ptaille=30,
+                                                     pstyle="bold")
+
+        btnChooseFile = self.__arreraTk.createButton(self.__fPara,text ="Emplacement de téléchargement",command=self.__setFolder,
+                                                     ppolice="Arial",ptaille=20)
+
+        btnDoc = self.__arreraTk.createButton(self.__fPara,text="Documentation d'Arrera Download",
+                                              command= lambda : webbrowser.open(
+                                                  "https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/README.md")
+                                              ,ppolice="Arial",ptaille=20)
+
+        btnApropos = self.__arreraTk.createButton(self.__fPara,text="A propos d'Arrera Download"
+                                                  ,command= lambda : self.__arreraTk.aproposWindows(
+                nameSoft="Arrera Download",version="",
+                iconFile="image/ArreraVideoDownload.png",
+                copyright="",linkSource="",linkWeb=""),
+                                                  ppolice="Arial",ptaille=20)
+
+        btnExitPara = self.__arreraTk.createButton(self.__fPara,text="Retour a l'acceuil",ppolice="Arial",
+                                                   ptaille=20,command=self.__backMain)
         # Affichage
         self.__arreraTk.placeCenter(self.__fMain)
+        # fmain
         self.__arreraTk.placeTopCenter(labelTitle)
         modeSelection.place(x=10,y=60)
         self.__arreraTk.placeLeftBottom(btnPara)
         self.__arreraTk.placeRightBottom(btnDownload)
-
         self.__arreraTk.placeCenter(self.__entryURL)
-        
+        # fpara
+        self.__arreraTk.placeTopCenter(labelTitlePara)
+        self.__arreraTk.placeCenter(btnDoc)
+        self.__arreraTk.placeCenterOnWidth(btnChooseFile,120)
+        self.__arreraTk.placeCenterOnWidth(btnApropos,300)
+
+        self.__arreraTk.placeBottomRight(btnExitPara)
         # Mise d'une valeur sur l'option menu 
         self.__varGetMode.set(self.__listMode[0])
         
@@ -119,3 +137,11 @@ class CArreraDGUI :
             showinfo("Download","Dossier enregistrer")
         else :
             showerror("Download","Aucun dossier selectionner")
+
+    def __viewPara(self):
+        self.__fMain.place_forget()
+        self.__arreraTk.placeCenter(self.__fPara)
+
+    def __backMain(self):
+        self.__fPara.place_forget()
+        self.__arreraTk.placeCenter(self.__fMain)
