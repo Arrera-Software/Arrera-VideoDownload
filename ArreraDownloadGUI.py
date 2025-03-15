@@ -12,6 +12,8 @@ class CArreraDGUI :
         self.__arreraTk = CArreraTK()
         # Initilisation de l'objet OS
         dectOs = OS()
+        # Initilisation du theard
+        self.__tDownload = th.Thread()
         # Mise en place de l'icon
         if (dectOs.osWindows() == True):
             icon = "image/ArreraVideoDownload.ico"
@@ -32,7 +34,7 @@ class CArreraDGUI :
         # Para
         self.__fPara = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
         # Download
-
+        self.__fDownload = self.__arreraTk.createFrame(self.__windows,width=450,height=450)
         # Widget
         # fmain
         labelTitle = self.__arreraTk.createLabel(self.__fMain,text="Arrera Download",
@@ -40,7 +42,7 @@ class CArreraDGUI :
                                                  pstyle="bold")
 
         self.__entryURL = self.__arreraTk.createEntry(self.__fMain,ppolice="Arial",ptaille=20,width=400)
-        btnDownload = self.__arreraTk.createButton(self.__fMain,text="Telecharger",command=self.__download,
+        btnDownload = self.__arreraTk.createButton(self.__fMain,text="Telecharger",command=self.__downlaodView,
                                                    ppolice="Arial",ptaille=20)
         btnPara = self.__arreraTk.createButton(self.__fMain,text="Parametre",ppolice="Arial",
                                                ptaille=20,command=self.__viewPara)
@@ -72,6 +74,8 @@ class CArreraDGUI :
 
         btnExitPara = self.__arreraTk.createButton(self.__fPara,text="Retour a l'acceuil",ppolice="Arial",
                                                    ptaille=20,command=self.__backMain)
+        # fDownload
+        self.__labelDownload = self.__arreraTk.createLabel(self.__fDownload,text="",ppolice="Arial",ptaille=20)
         # Affichage
         self.__arreraTk.placeCenter(self.__fMain)
         # fmain
@@ -86,6 +90,9 @@ class CArreraDGUI :
         self.__arreraTk.placeCenterOnWidth(btnChooseFile,120)
         self.__arreraTk.placeCenterOnWidth(btnApropos,300)
 
+        #fDonwload
+        self.__arreraTk.placeCenter(self.__labelDownload)
+
         self.__arreraTk.placeBottomRight(btnExitPara)
         # Mise d'une valeur sur l'option menu 
         self.__varGetMode.set(self.__listMode[0])
@@ -96,39 +103,6 @@ class CArreraDGUI :
     
     def active(self):
         self.__windows.mainloop()
-    
-    def __download(self):
-        folder = self.__jsonSetting.lectureJSON("folder")
-        if (folder == ""):
-            self.__objetArrera.setDownloadFolder()
-        else :
-            self.__objetArrera.setDownloadFolderDur(folder)
-            
-        # Recuperation du mode 
-        mode = self.__varGetMode.get()
-        
-        if (mode == "Video Simple"):
-            self.__objetArrera.setMode(1)
-        else :
-            if (mode == "Juste sons") :
-                self.__objetArrera.setMode(2)
-            else :
-                if (mode == "Juste Video") :
-                    self.__objetArrera.setMode(3)
-        
-        tDownload = th.Thread(target=self.__objetArrera.setURL(self.__entryURL.get()))
-        tDownload.start()
-        tDownload.join()
-        del tDownload
-        
-        self.__entryURL.delete(0,END)
-        
-        sortie = self.__objetArrera.download()
-        
-        if (sortie == True):
-            showinfo("Download","Video telecharger")
-        else :
-            showerror("Download","Erreur de telechargement")
     
     def __setFolder(self):
         folder = filedialog.askdirectory(title="Dossier de telechargement")
@@ -145,3 +119,60 @@ class CArreraDGUI :
     def __backMain(self):
         self.__fPara.place_forget()
         self.__arreraTk.placeCenter(self.__fMain)
+
+    def __downlaodView(self):
+        url = self.__entryURL.get()
+        self.__entryURL.delete(0,END)
+        folder = self.__jsonSetting.lectureJSON("folder")
+        if (folder == ""):
+            showerror("Download","Aucun dossier de telechargement enregistrer")
+            return
+        else :
+            self.__objetArrera.setDownloadFolderDur(folder)
+
+        # Recuperation du mode
+        mode = self.__varGetMode.get()
+
+        if (mode == "Video Simple"):
+            self.__objetArrera.setMode(1)
+        else :
+            if (mode == "Juste sons") :
+                self.__objetArrera.setMode(2)
+            else :
+                if (mode == "Juste Video") :
+                    self.__objetArrera.setMode(3)
+        if (url == ""):
+            showerror("Download","Aucun URL")
+            return
+        self.__objetArrera.setURL(url)
+        self.__tDownload = th.Thread(target=self.__objetArrera.download)
+
+        self.__fMain.place_forget()
+        self.__arreraTk.placeCenter(self.__fDownload)
+        self.__labelDownload.configure(text="Telechargement en cours...")
+        self.__tDownload.start()
+        self.__windows.after(500,self.__downloadCheck)
+
+    def __downloadCheck(self):
+        if (self.__tDownload.is_alive()):
+            text1 = "Telechargement en cours..."
+            text2 = "Telechargement en cours......"
+            text3 = "Telechargement en cours........."
+
+            textLabel = self.__labelDownload.cget("text")
+
+            if (textLabel == text1):
+                self.__labelDownload.configure(text=text2)
+            else :
+                if (textLabel == text2):
+                    self.__labelDownload.configure(text=text3)
+                else :
+                    self.__labelDownload.configure(text=text1)
+
+            self.__windows.after(500,self.__downloadCheck)
+        else :
+            showinfo("Download","Telechargement terminer")
+            self.__fDownload.place_forget()
+            self.__tDownload = th.Thread()
+            self.__arreraTk.placeCenter(self.__fMain)
+            self.__windows.update()
