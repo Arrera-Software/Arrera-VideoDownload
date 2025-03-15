@@ -2,19 +2,33 @@
 
 ## Présentation de l’application
 
-Arrera Download est une application qui permet de telecharger des video venant de youtube
+Arrera Download est une application qui permet de télécharger des vidéos provenant de YouTube.
 
 ## Explication de l’interface : 
 
-Entouré en rouge : Menu déroulant qui permet de choisir entre : 
-- Vidéo simple : Télécharge la vidéo  avec le sons et la vidéo en .mp4
-- Juste sons : Télécharge la vidéo mais que le sons en .webm
-- Juste Vidéo : Télécharge la vidéo mais que la vidéo en .webm (En meilleur qualités)
+### Interface principal
 
-**Entouré en vert** : Zone de texte qui permet de copier l’url de la vidéo youtube
+**Entourer en rouge** : Menu déroulant qui permet de choisir parmi les options suivantes : 
+- Vidéo simple : Télécharge la vidéo avec le son et l'image en .mp4.
+- Juste son : Télécharge la vidéo, mais uniquement le son en .webm.
+- Juste vidéo : Télécharge la vidéo, mais uniquement l'image en .webm (en meilleure qualité).
 
-**Entouré en jaune** : Bouton qui permet de choisir le dossier de téléchargement de la video 
+**Entourer en vert** : Zone de texte permettant de copier l’URL de la vidéo YouTube.
 
-**Entouré en rose** : Bouton pour lancer le téléchargement de la vidéo
+**Entourer en jaune** : Bouton qui permet d'accéder aux paramètres de l'application.
+
+**Entourer en rose** : Bouton permettant de lancer le téléchargement de la vidéo.
 
 ![Image Interface](https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/image/docs/img-gui.png)
+
+### Parametre 
+
+**Entourer en rouge** : Bouton qui permet de sélectionner où seront téléchargées vos vidéos YouTube.
+
+**Entourer en vert** : Bouton qui permet de retourner à la page d'accueil d'Arrera Video Download.
+
+**Entourer en jaune** : Bouton permettant d'ouvrir la documentation de l'application.
+
+**Entourer en rose** : Bouton permettant d'ouvrir la fenêtre À propos.
+
+![Image Parametre](https://github.com/Arrera-Software/Arrera-VideoDownload/blob/main/image/docs/paragui.png?raw=true)
