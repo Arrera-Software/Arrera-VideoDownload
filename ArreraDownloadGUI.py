@@ -55,6 +55,7 @@ class CArreraDGUI :
                                                    ppolice="Arial",ptaille=20)
         btnChooseFile = self.__arreraTk.createButton(self.__fMain,text ="Dossier Sortie",command=self.__setFolder,
                                                      ppolice="Arial",ptaille=20)
+        btnPara = self.__arreraTk.createButton(self.__fMain,text="Parametre",ppolice="Arial",ptaille=20)
         modeSelection = self.__arreraTk.createOptionMenu(self.__fMain,
                                                          var = self.__varGetMode,
                                                          value=self.__listMode,
@@ -63,7 +64,8 @@ class CArreraDGUI :
         self.__arreraTk.placeCenter(self.__fMain)
         self.__arreraTk.placeTopCenter(labelTitle)
         modeSelection.place(x=10,y=60)
-        self.__arreraTk.placeBottomCenter(btnDownload)
+        self.__arreraTk.placeLeftBottom(btnPara)
+        self.__arreraTk.placeRightBottom(btnDownload)
 
         self.__arreraTk.placeCenter(self.__entryURL)
         
