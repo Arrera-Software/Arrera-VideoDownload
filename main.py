@@ -1,5 +1,9 @@
 from ArreraDownloadGUI import*
+import PIL._tkinter_finder # NO SUPPR
 
-a = CArreraDGUI()
+def main():
+    a = CArreraDGUI()
+    a.active()
 
-a.active()
+if __name__ == '__main__':
+    main()
